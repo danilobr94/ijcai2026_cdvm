@@ -18,7 +18,7 @@ Code for the IJCAI 2026 paper:
 }
 ```
 
-**Want to use CDVM?** Start with [`example_fashion_mnist.ipynb`](example_fashion_mnist.ipynb), it is self-contained and runs on Google Colab. [`example_synthetic.ipynb`](example_synthetic.ipynb) is similarly standalone. The rest of this repository reproduces the experiments and plots from the paper.
+**Want to use CDVM?** Start with [`example_fashion_mnist.ipynb`](example_fashion_mnist.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danilobr94/ijcai2026_cdvm/blob/main/example_fashion_mnist.ipynb), it is self-contained and runs on Google Colab. [`example_synthetic.ipynb`](example_synthetic.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danilobr94/ijcai2026_cdvm/blob/main/example_synthetic.ipynb) is similarly standalone. The rest of this repository reproduces the experiments and plots from the paper.
 
 ---
 
@@ -39,15 +39,7 @@ The container includes CUDA support, all Python dependencies, and JupyterLab.
 pip install -r requirements.txt
 ```
 
-Key dependencies:
-
-| Package | Version | Purpose |
-|---|---|---|
-| `opendataval` | 1.2.1 | Data valuation framework |
-| `mlflow` | 2.15.1 | Experiment tracking |
-| `cvxpy` | latest | Convex optimization (CDVM) |
-| `gurobipy` | latest | LP solver (CDVM + pruning) |
-| `jupyterlab` | latest | Notebooks |
+Additionally, the patches in `odv_fix/` must be applied manually to the installed `opendataval` package (see `Dockerfile` for reference).
 
 ### Gurobi license
 
@@ -73,21 +65,21 @@ MLflow experiments (`mlruns/`, `mlartifacts/`) and intermediate CDVM artifacts
 (`data/attr_datavals/`, `data/attr_selected_vals/`) are included in this repository.
 
 Large precomputed files (attribution matrices ~7.8 GB, influence score matrices ~200 MB)
-are hosted separately. Download them with:
+are hosted separately and can be downloaded optionally to speed up Path B:
 
 ```bash
 python download_data.py
 ```
 
-This fetches `data/attr_matr/` and the `influence_score_matrix-*.npy` files required
-to run CDVM and pruning optimization without recomputing them from scratch.
+This fetches `data/attr_matr/` and the `influence_score_matrix-*.npy` files.
+If not downloaded, both files are recomputed automatically when running Path B (slower).
 See [`data/README.md`](data/README.md) for a full breakdown of all data files.
 
 ---
 
 ## Reproducing Plots (Path A)
 
-After downloading the data, run the notebooks in any order:
+The MLflow results included in this repository are sufficient — run the notebooks in any order:
 
 | # | Notebook | Output |
 |---|---|---|
@@ -97,26 +89,14 @@ After downloading the data, run the notebooks in any order:
 | 4 | `plot_retention_overlap.ipynb` | Set overlap heatmaps → `output/` |
 | 5 | `plot_hyperparams.ipynb` | Hyperparameter distributions → `data/output/` |
 | 6 | `plot_runtime.ipynb` | Runtime vs. performance → `data/output/` |
-| 7 | `example_synthetic.ipynb` | Toy 2D examples → `output/` |
-| 8 | `example_fashion_mnist.ipynb` | Standalone Fashion-MNIST experiment |
+| 7 | [`example_synthetic.ipynb`](example_synthetic.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danilobr94/ijcai2026_cdvm/blob/main/example_synthetic.ipynb) | Toy 2D examples → `output/` |
+| 8 | [`example_fashion_mnist.ipynb`](example_fashion_mnist.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danilobr94/ijcai2026_cdvm/blob/main/example_fashion_mnist.ipynb) | Standalone Fashion-MNIST experiment |
 
 Create output directories if they do not exist:
 
 ```bash
 mkdir -p data/output output data/results
 ```
-
-### MLflow run name prefixes expected by the notebooks
-
-| Prefix | Method |
-|---|---|
-| `DataAttrOpt(5000, 0.03, 15, best, alpha=best)` | CDVM |
-| `PruningOptimization` | Influence-based pruning |
-| `DataOob(1000` | DataOOB baseline |
-| `DataBanzhaf(num` | Banzhaf baseline |
-| `RandomEvaluator()` | Random baseline |
-
-Run names are matched by prefix — any change to a method's `__repr__` will break notebook lookups.
 
 ---
 
@@ -140,18 +120,9 @@ python run_pruning.py
 
 Runs influence-based pruning for all datasets and budget sizes [50, 100, 150, 200, 250, 300].
 Adds `PruningOptimization` runs to the `final-3-{dataset}-25` experiments.
-Requires Gurobi and the precomputed influence score matrices (or `rerun=True` to recompute).
+Requires Gurobi. Influence score matrices are recomputed automatically if not present (slower).
 
-### Step 3 — Attribution matrix precomputation (optional)
-
-```bash
-python run_attr_computation.py
-```
-
-Precomputes the train–test attribution matrix and stores it under `data/attr_matr/`.
-If skipped, `run_cdvm.py` computes attribution matrices on the fly (much slower).
-
-### Step 4 — CDVM optimization
+### Step 3 — CDVM optimization
 
 ```bash
 python run_cdvm.py
@@ -162,28 +133,13 @@ Adds `DataAttrOpt(...)` runs to `final-3-{dataset}-25` and writes:
 - `data/attr_datavals/` — binary selection vectors per run
 - `data/attr_selected_vals/` — best `max_val` / `alpha` per run
 
-Requires Gurobi and either precomputed attribution matrices (Step 3) or sufficient compute.
+Requires Gurobi. Attribution matrices are precomputed automatically if not present (slower).
 
-### Step 5 — Generate plots
+### Step 4 — Generate plots
 
 Follow Path A once all MLflow runs are present.
 
----
 
-## Key Source Files
 
-| File | Purpose |
-|---|---|
-| `methods/cdvm.py` | CDVM algorithm (primary contribution) |
-| `methods/pruning_optimization.py` | Influence-based pruning (baseline) |
-| `methods/dataoob.py` | DataOOB evaluator (baseline) |
-| `run_baselines.py` | Entry point: baseline experiments |
-| `run_cdvm.py` | Entry point: CDVM optimization |
-| `run_pruning.py` | Entry point: pruning optimization |
-| `run_attr_computation.py` | Precompute attribution matrices |
-| `utils_run.py` | MLflow logging and result export |
-| `utils_plot.py` | Plot aggregation helpers |
-
----
 
 
