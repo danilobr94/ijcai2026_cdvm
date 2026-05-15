@@ -95,7 +95,8 @@ def summarize_pruning_results(dataset_name, experiment_suffix="-PruningOptimizat
 
     df_summary = pd.DataFrame(summary).T.reset_index().rename(columns={"index": "axis"})
 
-    exp_name = f"final-3-{dataset_name}-25"
+    num_exp = experiment_suffix.split("-")[-1]
+    exp_name = f"final-3-{dataset_name}-{num_exp}"
     mlflow.end_run()
     mlflow.set_experiment(exp_name)
     mlflow.start_run(run_name="PruningOptimization", tags={"mlflow.runColor": "#90ee90"})
@@ -159,7 +160,7 @@ def run_dataset(dataset_name):
         run_multiple_models(exper_med, PruningOptimization, [""],
                             NUM_EXPERIMENTS, dve_kwargs, check_available=False, random=False, log_joint_bool=False)
 
-    summarize_pruning_results(dataset_name)
+    summarize_pruning_results(dataset_name, experiment_suffix=f"-PruningOptimization-npy-{NUM_EXPERIMENTS}")
 
 
 if __name__ == "__main__":
