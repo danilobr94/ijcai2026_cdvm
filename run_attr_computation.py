@@ -1,16 +1,24 @@
-import os
-from copy import deepcopy
-from opendataval.model import ModelFactory
+"""
+Precomputes train-test attribution matrices and stores them under data/attr_matr/.
 
+Each matrix has shape (num_train_points, num_test_points) and captures the marginal
+effect of including a training point on per-test-point prediction accuracy, estimated
+across num_models random subsets. Skips datasets whose matrix file already exists.
+
+Called automatically by run_cdvm.py when matrices are absent; run this script
+beforehand to avoid recomputing them on every CDVM run (recommended for full datasets).
+"""
+import os
+import warnings
 import torch
-from typing import Union, Optional, Literal
-from sklearn.utils import check_random_state
-from numpy.random import RandomState
 import numpy as np
+from copy import deepcopy
+from typing import Union, Optional, Literal
+from numpy.random import RandomState
+from sklearn.utils import check_random_state
+from tqdm import tqdm
 from opendataval.experiment import ExperimentMediator
 from opendataval.dataloader import mix_labels
-
-from tqdm import tqdm
 from opendataval.dataval.api import DataEvaluator, ModelMixin
 
 
@@ -29,7 +37,7 @@ class DataAttributionRunner(DataEvaluator, ModelMixin):
         self.num_models = num_models
         self.prob = prob
         self.random_state = check_random_state(random_state)
-        self.tran_new_models = False
+        self.train_new_models = False
 
     def __repr__(self) -> str:
         return f"DataAttrRunner({self.num_models})"
@@ -110,7 +118,6 @@ class DataAttributionRunner(DataEvaluator, ModelMixin):
 
 
 def train_and_store_attr_matrix(exper_med, num_models, prob, pth, pbar=None):
-    """"""
     dves = [DataAttributionRunner(
         file_path=pth,
         num_models=num_models,
@@ -164,7 +171,6 @@ def run_dataset_once(dataset_name, num_epochs, n_models, prob, pbar=None, postfi
         train_kwargs=train_kwargs,
         model_name=model_name,
         metric_name=metric_name,
-        random_state=42,
         device=device,
     )
 
@@ -172,22 +178,14 @@ def run_dataset_once(dataset_name, num_epochs, n_models, prob, pbar=None, postfi
 
 
 if __name__ == "__main__":
-    # Example usage
-    probs = ["random", 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+    warnings.filterwarnings("ignore")
+
     probs = [0.1]
     num_models = [2]
     dataset_names = ["cifar10-embeddings", "imdb-embeddings", "bbc-embeddings", "adult", "pol", "nomao"]
     EPOCHS = 15
 
-    import os
-
-    # supress warnings
-    import warnings
-    warnings.filterwarnings("ignore")
-
-    # redirect stdout to devnull to suppress tqdm output
-    # with open(os.devnull, "w") as outer_space, redirect_stdout(outer_space):
-    for d in (pbar:= tqdm(dataset_names)):
+    for d in (pbar := tqdm(dataset_names)):
         for num_model in num_models:
             for prob in probs:
                 run_dataset_once(d, EPOCHS, num_model, prob, pbar=None)
