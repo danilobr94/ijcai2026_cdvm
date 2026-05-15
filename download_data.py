@@ -15,7 +15,7 @@ import urllib.request
 SHARE = "https://owncloud.fraunhofer.de/index.php/s/cbK2Hv1B5lR9K2p"
 
 FILES = {
-    "attr_matr.zip":        ("data/attr_matr",  f"{SHARE}/download?path=%2F&files=attr_matr.zip"),
+    "attr_matr.zip":        ("data",             f"{SHARE}/download?path=%2F&files=attr_matr.zip"),
     "influence_scores.zip": ("data",             f"{SHARE}/download?path=%2F&files=influence_scores.zip"),
 }
 
