@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/159042447193172682
+creation_time: 1741251892766
+experiment_id: '159042447193172682'
+last_update_time: 1741251892766
+lifecycle_stage: active
+name: cifar10-embeddings-DataAttributionOptimization-[2000]-10

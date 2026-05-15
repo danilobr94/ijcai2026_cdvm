@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/115615945651283342
+creation_time: 1753208980996
+experiment_id: '115615945651283342'
+last_update_time: 1753208980996
+lifecycle_stage: active
+name: final-3-cifar10-embeddings-25

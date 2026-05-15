@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/186191411105093034/aad829777c094d56aac4d97fc5bcb0a1/artifacts
+end_time: 1754487634906
+entry_point_name: ''
+experiment_id: '186191411105093034'
+lifecycle_stage: active
+run_id: aad829777c094d56aac4d97fc5bcb0a1
+run_name: DataOob(1000, epochs=15)
+run_uuid: aad829777c094d56aac4d97fc5bcb0a1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754487633923
+status: 3
+tags: []
+user_id: root

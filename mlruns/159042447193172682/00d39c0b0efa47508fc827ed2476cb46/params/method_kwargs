@@ -1,0 +1,1 @@
+{'alt_train_kwargs': {'epochs': 15, 'batch_size': 32, 'lr': 0.01}, 'optim': 'sum', 'lambda_sum': 1.0, 'lambda_range': 0.1, 'only_frac': 100, 'max_val': 1.5, 'prob': 'frac', 'num_models': 2000}

@@ -1,0 +1,8 @@
+opendataval==1.2.1
+mlflow==2.15.1
+boto3==1.21.1
+cvxpy
+gurobipy
+cplex
+jupyterlab
+ipykernel

@@ -1,0 +1,28 @@
+services:
+  development:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    shm_size: '2gb'
+    tty: true
+    stdin_open: true
+    command: sh
+    working_dir: /workspace
+    # network_mode: "host"
+
+    volumes:
+      - .:/workspace
+    environment:
+      - PYTHONUNBUFFERED=1
+      - NVIDIA_VISIBLE_DEVICES=all
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    deploy:
+      resources:
+        limits:
+          cpus: "12"
+        reservations:
+          devices:
+            - capabilities: [gpu]
+              driver: nvidia

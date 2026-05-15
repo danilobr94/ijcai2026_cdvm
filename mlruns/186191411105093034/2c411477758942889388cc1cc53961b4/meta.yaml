@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/186191411105093034/2c411477758942889388cc1cc53961b4/artifacts
+deleted_time: 1754491841763
+end_time: 1754489443019
+entry_point_name: ''
+experiment_id: '186191411105093034'
+lifecycle_stage: deleted
+run_id: 2c411477758942889388cc1cc53961b4
+run_name: DataBanzhaf(num_models=1000)
+run_uuid: 2c411477758942889388cc1cc53961b4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754489442149
+status: 3
+tags: []
+user_id: root

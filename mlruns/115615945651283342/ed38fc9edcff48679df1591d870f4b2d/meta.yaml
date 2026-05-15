@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/115615945651283342/ed38fc9edcff48679df1591d870f4b2d/artifacts
+deleted_time: 1757405494498
+end_time: 1757405477775
+entry_point_name: ''
+experiment_id: '115615945651283342'
+lifecycle_stage: deleted
+run_id: ed38fc9edcff48679df1591d870f4b2d
+run_name: PruningOptimization
+run_uuid: ed38fc9edcff48679df1591d870f4b2d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1757405477743
+status: 3
+tags: []
+user_id: root

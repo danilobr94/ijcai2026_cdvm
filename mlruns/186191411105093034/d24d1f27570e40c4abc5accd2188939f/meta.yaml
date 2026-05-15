@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/186191411105093034/d24d1f27570e40c4abc5accd2188939f/artifacts
+end_time: 1754475276536
+entry_point_name: ''
+experiment_id: '186191411105093034'
+lifecycle_stage: active
+run_id: d24d1f27570e40c4abc5accd2188939f
+run_name: DataBanzhaf(num_models=1000)
+run_uuid: d24d1f27570e40c4abc5accd2188939f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1754475275617
+status: 3
+tags: []
+user_id: root

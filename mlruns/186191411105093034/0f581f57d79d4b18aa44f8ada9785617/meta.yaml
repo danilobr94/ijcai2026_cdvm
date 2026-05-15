@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/186191411105093034/0f581f57d79d4b18aa44f8ada9785617/artifacts
+deleted_time: 1757601390026
+end_time: 1757599984640
+entry_point_name: ''
+experiment_id: '186191411105093034'
+lifecycle_stage: deleted
+run_id: 0f581f57d79d4b18aa44f8ada9785617
+run_name: DataAttrOpt(10000, 0.02, 15, best, +b, alpha=best)
+run_uuid: 0f581f57d79d4b18aa44f8ada9785617
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1757599984325
+status: 3
+tags: []
+user_id: root

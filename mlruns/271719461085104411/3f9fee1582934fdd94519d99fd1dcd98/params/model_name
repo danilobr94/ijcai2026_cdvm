@@ -1,0 +1,3 @@
+LogisticRegression(
+  (linear): Linear(in_features=768, out_features=2, bias=True)
+)
