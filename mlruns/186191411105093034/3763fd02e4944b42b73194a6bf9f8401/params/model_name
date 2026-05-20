@@ -1,3 +1,0 @@
-LogisticRegression(
-  (linear): Linear(in_features=89, out_features=2, bias=True)
-)

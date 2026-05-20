@@ -1,1 +1,0 @@
-{'epochs': 15, 'batch_size': 32, 'lr': 0.01}
