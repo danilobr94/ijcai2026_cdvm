@@ -160,3 +160,5 @@ data/influence_score_matrix_cifar_mlp.npy
 data/*.zip
 
 run_datattr_opt.py
+data/attr_selected_vals/
+data/attr_datavals/
