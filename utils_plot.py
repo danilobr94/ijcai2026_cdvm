@@ -125,6 +125,7 @@ def aggregate_plot(df_resp, ax=None,
     ax_.set_xlabel(xlabel)
     ax_.set_ylabel(ylabel)
     ax_.set_xticks(df_grouped["axis"][1::2])
+    ax_.tick_params(labelsize=16)
 
     if y_lim is not None:
         ax_.set_ylim(y_lim)
