@@ -59,6 +59,11 @@ def find_run(experiment_name, method_start):
         raise ValueError(f"Experiment '{experiment_name}' not found in mlruns/.")
 
     for run_id in os.listdir(exp_path):
+        meta_file = os.path.join(exp_path, run_id, "meta.yaml")
+        if os.path.isfile(meta_file):
+            with open(meta_file) as f:
+                if "lifecycle_stage: deleted" in f.read():
+                    continue
         tag_file = os.path.join(exp_path, run_id, "tags", "mlflow.runName")
         if not os.path.isfile(tag_file):
             continue
