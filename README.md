@@ -7,15 +7,21 @@ Code for the IJCAI 2026 paper:
 > [arXiv:2605.11312](https://arxiv.org/abs/2605.11312)
 
 ```bibtex
-@misc{brajovic2026constraintdatavaluemaximizationutilizingdataattribution,
-      title={Constraint-Data-Value-Maximization: Utilizing Data Attribution for Effective Data Pruning in Low-Data Environments},
-      author={Danilo Brajovic and David A. Kreplin and Marco F. Huber},
-      year={2026},
-      eprint={2605.11312},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2605.11312},
+@inproceedings{ijcai2026p271,
+  title     = {Constraint-Data-Value-Maximization: Utilizing Data Attribution for Effective Data Pruning in Low-Data Environments},
+  author    = {Brajovic, Danilo and Kreplin, David A. and Huber, Marco F.},
+  booktitle = {Proceedings of the Thirty-Fifth International Joint Conference on
+               Artificial Intelligence, {IJCAI-26}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Diego Calvanese},
+  pages     = {2438--2446},
+  year      = {2026},
+  month     = {8},
+  note      = {Main Track},
+  doi       = {10.24963/ijcai.2026/271},
+  url       = {https://doi.org/10.24963/ijcai.2026/271},
 }
+
 ```
 
 **Want to use CDVM?** Start with [`example_fashion_mnist.ipynb`](example_fashion_mnist.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danilobr94/ijcai2026_cdvm/blob/main/example_fashion_mnist.ipynb), it is self-contained and runs on Google Colab. [`example_synthetic.ipynb`](example_synthetic.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/danilobr94/ijcai2026_cdvm/blob/main/example_synthetic.ipynb) is similarly standalone. The rest of this repository reproduces the experiments and plots from the paper.
